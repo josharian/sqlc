@@ -159,6 +159,7 @@ func generate(req *plugin.CodeGenRequest, enums []Enum, structs []Struct, querie
 		"escape":     sdk.EscapeBacktick,
 		"imports":    i.Imports,
 		"hasPrefix":  strings.HasPrefix,
+		"hasSuffix":  strings.HasSuffix,
 
 		// These methods are Go specific, they do not belong in the codegen package
 		// (as that is language independent)

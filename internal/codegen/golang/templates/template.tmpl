@@ -75,6 +75,33 @@ const (
 	{{- end}}
 )
 
+// Valid{{.Name}} returns a valid Null{{.Name}} containing x.
+func Valid{{.Name}}(x {{.Name}}) Null{{.Name}} {
+	return Null{{.Name}}{ {{.Name}}: x, Valid: true }
+}
+
+var (
+	{{ $enumName := .Name }}
+	{{- range .Constants}}
+	Valid{{ .Name }} Null{{$enumName}} = Valid{{$enumName}}({{ .Name }})
+	{{- end }}
+)
+
+{{ $hasUnknown := false }}
+{{- range .Constants}}
+	{{- if hasSuffix .Name "Unknown" }}
+		{{- $hasUnknown = true }}
+	{{- end }}
+{{- end }}
+{{ if $hasUnknown }}
+func (x Null{{.Name}}) NullToUnknown() {{.Name}} {
+	if x.Valid {
+		return x.{{.Name}}
+	}
+	return {{.Name}}Unknown
+}
+{{ end }}
+
 func (e *{{.Name}}) Scan(src interface{}) error {
 	switch s := src.(type) {
 	case []byte:
