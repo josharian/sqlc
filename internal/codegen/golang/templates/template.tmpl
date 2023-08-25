@@ -102,6 +102,17 @@ func (x Null{{.Name}}) NullToUnknown() {{.Name}} {
 }
 {{ end }}
 
+func (x Null{{.Name}}) String() string {
+	if x.Valid {
+		return x.{{.Name}}.String()
+	}
+	return "<null {{.Name}}>"
+}
+
+func (x {{.Name}}) String() string {
+	return string(x)
+}
+
 func (e *{{.Name}}) Scan(src interface{}) error {
 	switch s := src.(type) {
 	case []byte:
