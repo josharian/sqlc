@@ -83,8 +83,10 @@ func Valid{{.Name}}(x {{.Name}}) Null{{.Name}} {
 var (
 	{{ $enumName := .Name }}
 	{{- range .Constants}}
-	Valid{{ .Name }} Null{{$enumName}} = Valid{{$enumName}}({{ .Name }})
+	Valid{{ .Name }} = Valid{{$enumName}}({{ .Name }})
 	{{- end }}
+
+	Invalid{{ $enumName }} Null{{$enumName}}
 )
 
 {{ $hasUnknown := false }}
